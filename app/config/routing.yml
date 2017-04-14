@@ -1,0 +1,7 @@
+briefcase:
+  resource: '@BriefcaseBundle/Controller/'
+  type: annotation
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
