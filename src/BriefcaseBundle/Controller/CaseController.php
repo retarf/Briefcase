@@ -37,7 +37,28 @@ class CaseController extends Controller
 
 		$form -> handleRequest($request);
 
+		if($form -> isSubmitted() && $form -> isValid())
+		{
+			$em = $this -> getDoctrine() -> getManager();
+			$em -> persist($case);
+			$em -> flush();
+
+			return $this -> redirectToRoute('case_list');
+		}
+
+
 		return $this->render('case/form.html.twig', array('form' => $form -> createView(), ));
+	}
+
+	/**
+	*@Route("/{caseId}", name="case_display")
+	*/
+	public function displayAction($caseId)
+	{
+		$repository = $this -> getDoctrine() ->getRepository('BriefcaseBundle:CourtCase');
+		$case = $repository -> findOneById($caseId);
+
+		return $this -> render('case/display.html.twig', array('case' => $case));
 	}
 
 }
