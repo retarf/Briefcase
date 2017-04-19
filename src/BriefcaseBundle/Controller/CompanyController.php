@@ -51,8 +51,11 @@ class CompanyController extends Controller
 	*/
 	public function displayAction($companyId)
 	{
-		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Company');
-		$company = $repository -> findOneById($companyId);
+		$companyRepository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Company');
+		$company = $companyRepository -> findOneById($companyId);
+
+		$casesRepository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:CourtCase');
+		$cases = $casesRepository -> findByCompany($companyId);
 
 
 		if($company == null)
@@ -61,7 +64,7 @@ class CompanyController extends Controller
 		}
 		else
 		{
-			return $this -> render('company/display.html.twig', array('company' => $company, 'cases'));
+			return $this -> render('company/display.html.twig', array('company' => $company, 'cases' => $cases, ));
 			
 		}
 

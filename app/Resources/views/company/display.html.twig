@@ -46,6 +46,33 @@
 	
 	</div>
 
+	<table class="table table-striped table-hover ">
+		  <thead>
+		    <tr>
+		      <th>#</th>
+		      <th>Nazwa sprawy</th>
+		      <th>Numer</th>
+		      <th>Firma</th>
+		      <th>Numer sprawy sądowej</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			{% for case in cases %}
+			    
+				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ case.id }}').click()"  >
+							<a href="/case/{{ case.id }}" id="edit-{{ case.id }}"><td>7</td>
+
+							
+							<td>{{ case.name }}</td>
+							<td>{{ case.number }}</td>
+							<td>{{ case.company.name }}</td>
+							<td>{{ case.courtCaseNumber }}</td>
+				    </tr>
+			{% endfor %}
+
+		  </tbody>
+		</table> 	
+
 </div>
 
 {% endblock %}
