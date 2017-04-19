@@ -1,0 +1,65 @@
+<?php
+
+namespace BriefcaseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CourtCase
+ *
+ * @ORM\Table(name="court_case")
+ * @ORM\Entity(repositoryClass="BriefcaseBundle\Repository\CourtCaseRepository")
+ */
+class CourtCase
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="number", type="string", length=255, unique=true)
+     */
+    private $number;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_it_court_case", type="boolean")
+     */
+    private $isItCourtCase;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="court_case_number", type="string", length=255, nullable=true, unique=true)
+     */
+    private $courtCaseNumber;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="court_case")
+     * @ORM\JoinColumn(name="company", referencedColumnName="id")
+     */
+    private $company;
+}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container">
+
+	<div style="float: right">
+		<a href="edit/{{ company.id }}" class="btn btn-primary">Edytuj</a>
+		<a href="delete/{{ company.id }}" class="btn btn-danger">Usuń</a>
+	</div>
+	<div style="clear:both"></div>
+
+
+	<h1>{{ company.name }}</h1>
+
+	<div class="col-sm-6">
+
+		<div class="panel panel-success">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Dane teleadresowe</h3>
+		  </div>
+		  <div class="panel-body">
+		    <table>
+				<tr>
+					<td class="well well-sm">Ulica:</td>
+					<td>{{ company.street }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Numer:</td>
+					<td>{{ company.number }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Miasto:</td>
+					<td>{{ company.city }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Kod pocztowy:</td>
+					<td>{{ company.zip }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">NIP:</td>
+					<td>{{ company.vat }}</td>
+				</tr>
+		    </table>
+		  </div>
+		</div>
+	
+	</div>
+
+</div>
+
+{% endblock %}

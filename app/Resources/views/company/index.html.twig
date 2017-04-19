@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	
+	<div class="container">
+
+		<div style="float: right">
+
+			<a href="add" class="btn btn-success"> Dodaj </a>
+		</div>
+		<div style="clear:both"></div>
+
+
+		<table class="table table-striped table-hover ">
+		  <thead>
+		    <tr>
+		      <th>#</th>
+		      <th>Nazwa Firmy</th>
+		      <th>Ulica</th>
+		      <th>Numer</th>
+		      <th>Kod pocztowy</th>
+		      <th>Miasto</th>
+		      <th>NIP</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			{% for company in companys %}
+			    
+				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ company.id }}').click()"  >
+							<a href="{{ company.id }}" id="edit-{{ company.id }}"><td>7</td>
+
+							<td>{{ company.name }}</td>
+							<td>{{ company.street }}</td>
+							<td>{{ company.number }}</td>
+							<td>{{ company.zip }}</td>
+							<td>{{ company.city }}</td>
+							<td>{{ company.vat }}</td></a>
+				    </tr>
+			{% endfor %}
+
+		  </tbody>
+		</table> 	
+
+	</div>
+
+{% endblock %}

@@ -12,7 +12,6 @@ class DefaultController extends Controller
 	*/
 	public function indexAction()
 	{
-		$test = "Hello World";
-		return $this->render('Briefcase/index.html.twig', array('test' => $test, ));
+		return $this -> render('default/index.html.twig');
 	}
 }
