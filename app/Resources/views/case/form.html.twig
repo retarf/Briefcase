@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %} <link rel="stylesheet" type="text/css" href="{{ asset('style/form.css') }}"> {% endblock %}
+{% block body %}
+
+<div class="container">
+
+	<div class="well bs-component">
+
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="form-horizontal">
+				
+					<fieldset >
+
+					    <legend>Dodawanie sprawy:</legend>
+
+						{{ form_start(form) }}
+
+
+					    <div class="form-group">
+					      <label class="col-lg-2 control-label">Nazwa:</label>
+					      <div class="col-lg-10">
+					        {{ form_widget(form.name,{'attr': {'class': 'form-control'}}) }}
+					      </div>
+					    </div>
+
+					    <div class="form-group">
+					      <label class="col-lg-2 control-label">Numer:</label>
+					      <div class="col-lg-10">
+					        {{ form_widget(form.number ,{'attr': {'class': 'form-control'}}) }}
+					      </div>
+					    </div>
+
+					    <div class="form-group">
+					      <label class="col-lg-2 control-label">Opis:</label>
+					      <div class="col-lg-10">
+					        {{ form_widget(form.description ,{'attr': {'class': 'form-control'}}) }}
+					      </div>
+					    </div>
+
+					    <div class="form-group">
+					      <label class="col-lg-2 control-label">Sprawa sądowa:</label>
+					      <div class="col-lg-10">
+					        {{ form_widget(form.isItCourtCase ,{'attr': {'class': 'form-control'}}) }}
+					      </div>
+					    </div>
+
+
+					    <div class="form-group">
+					      <label class="col-lg-2 control-label">Numer sprawy sądowej:</label>
+					      <div class="col-lg-10">
+					        {{ form_widget(form.courtCaseNumber ,{'attr': {'class': 'form-control'}}) }}
+					      </div>
+					    </div>
+
+					    <div class="form-group">
+					      <label class="col-lg-2 control-label">Firma:</label>
+					      <div class="col-lg-10">
+					        {{ form_widget(form.company ,{'attr': {'class': 'form-control'}}) }}
+					      </div>
+					    </div>
+
+						<!-- BUTONS -->
+						    <div class="form-group">
+						      <div class="col-lg-10 col-lg-offset-2">
+						        <a href="/company" class="btn btn-default">Anuluj</a>
+						        <button type="submit" class="btn btn-primary">Zatwierdź</button>
+						      </div>
+						    </div>
+
+						{{ form_end(form) }}
+
+					</fieldset>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
