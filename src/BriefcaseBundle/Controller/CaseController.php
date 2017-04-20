@@ -58,7 +58,10 @@ class CaseController extends Controller
 		$repository = $this -> getDoctrine() ->getRepository('BriefcaseBundle:CourtCase');
 		$case = $repository -> findOneById($caseId);
 
-		return $this -> render('case/display.html.twig', array('case' => $case));
+		$docRepo = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Document');
+		$docs = $docRepo -> findByCourtCase($caseId);
+
+		return $this -> render('case/display.html.twig', array('case' => $case, 'docs' => $docs, ));
 	}
 
 	/**

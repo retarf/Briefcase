@@ -67,7 +67,7 @@ class CourtCase
 
     /**
      *
-     *@ORM\OneToMany(targetEntity="Document", mappedBy="court_case")
+     *@ORM\OneToMany(targetEntity="Document", mappedBy="courtCase")
      */
     private $documents;
 
