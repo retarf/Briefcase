@@ -26,14 +26,14 @@ class Document
      *
      * @ORM\Column(name="is_incoming", type="boolean")
      */
-    private $is_incoming;
+    private $isIncoming;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ChancellerNumber", type="string", length=255, unique=true)
      */
-    private $chancellerNumber;
+    private $chancelleryNumber;
 
     /**
      * @var string
@@ -53,12 +53,12 @@ class Document
      *@ORM\ManyToOne(targetEntity="CourtCase", inversedBy="documents")
      *@ORM\JoinColumn(name="court_case", referencedColumnName="id")
      */
-    private $court_case;
+    private $courtCase;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="mail_date", type="string", length=255)
+     * @ORM\Column(name="mail_date", type="datetime")
      */
     private $mailDate;
 
@@ -350,7 +350,7 @@ class Document
      */
     public function setIsIncoming($isIncoming)
     {
-        $this->is_incoming = $isIncoming;
+        $this->isIncoming = $isIncoming;
 
         return $this;
     }
@@ -362,7 +362,7 @@ class Document
      */
     public function getIsIncoming()
     {
-        return $this->is_incoming;
+        return $this->isIncoming;
     }
 
     /**
@@ -387,5 +387,29 @@ class Document
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set chancelleryNumber
+     *
+     * @param string $chancelleryNumber
+     *
+     * @return Document
+     */
+    public function setChancelleryNumber($chancelleryNumber)
+    {
+        $this->chancelleryNumber = $chancelleryNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get chancelleryNumber
+     *
+     * @return string
+     */
+    public function getChancelleryNumber()
+    {
+        return $this->chancelleryNumber;
     }
 }

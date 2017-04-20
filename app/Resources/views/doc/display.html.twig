@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container">
+
+	<div style="float: right">
+		<a href="edit/{{ doc.id }}" class="btn btn-primary">Edytuj</a>
+		<a href="delete/{{ doc.id }}" class="btn btn-danger">Usuń</a>
+	</div>
+	<div style="clear:both"></div>
+
+
+	<h1>{{ doc.chancelleryNumber }}</h1>
+
+	<div class="col-sm-6">
+
+		<div class="panel panel-success">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Dane pisma</h3>
+		  </div>
+		  <div class="panel-body">
+		    <table>
+				<tr>
+					<td class="well well-sm">Opis:</td>
+					<td>{{ doc.description }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Data pisma:</td>
+					<td>{{ doc.date|date("Y-m-d") }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Sprawa:</td>
+					<td>{{ doc.courtCase.name }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Data kancelaryjna:</td>
+					<td>{{ doc.mailDate|date("Y-m-d") }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Kontrahent:</td>
+					<td>{{ doc.company.name }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Odpowiedź do pisma:</td>
+					<td>{{ doc.responseTo }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Sąd:</td>
+					<td>{{ doc.court }}</td>
+				</tr>
+				<tr>
+					<td class="well well-sm">Plik:</td>
+					<td><a href="{{ asset('/uploads/documents/' ~ doc.file) }}">Pobierz dokument (PDF)</a></td>
+				</tr>
+		    </table>
+		  </div>
+		</div>
+	
+	</div>
+
+</div>
+
+{% endblock %}

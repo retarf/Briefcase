@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	
+	<div class="container">
+
+		<div style="float: right">
+
+			<a href="add" class="btn btn-success"> Dodaj </a>
+		</div>
+		<div style="clear:both"></div>
+
+
+		<table class="table table-striped table-hover ">
+		  <thead>
+		    <tr>
+		      <th>#</th>
+		      <th>Przychodzące</th>
+		      <th>Numer kancelaryjny</th>
+		      <th>Opis</th>
+		      <th>Data pisma</th>
+		      <th>Sprawa</th>
+		      <th>Data przyjścia/wyjścia</th>
+		      <th>Kontrahent</th>
+		      <th>Odpowiedź do pisma</th>
+		      <th>Sąd</th>
+		      <th>plik</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			{% for doc in docs %}
+			    
+				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ doc.id }}').click()"  >
+							<a href="{{ doc.id }}" id="edit-{{ doc.id }}"><td>7</td>
+
+							{% if doc.isIncoming %}
+								<td>Przychodzący</td>
+							{% else %}
+								<td>Wychodzący</td>
+							{% endif %}
+							<td>{{ doc.chancelleryNumber }}</td>
+							<td>{{ doc.description }}</td>
+							<td>{{ doc.date|date("Y-m-d") }}</td>
+							<td>{{ doc.courtCase.name }}</td>
+							<td>{{ doc.mailDate|date("Y-m-d") }}</td>
+							<td>{{ doc.company.name }}</td>
+							<td>{{ doc.responseTo }}</td>
+							<td>{{ doc.court }}</td>
+							<td><a href="{{ asset('uploads/documents/' ~ doc.file) }}">Pobierz dokument (PDF)</a></td>
+							
+				    </tr>
+			{% endfor %}
+
+		  </tbody>
+		</table> 	
+
+	</div>
+
+{% endblock %}
