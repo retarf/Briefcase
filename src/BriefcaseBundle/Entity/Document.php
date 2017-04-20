@@ -22,6 +22,13 @@ class Document
     private $id;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_incoming", type="boolean")
+     */
+    private $is_incoming;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="ChancellerNumber", type="string", length=255, unique=true)
@@ -43,11 +50,10 @@ class Document
     private $date;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="court_case", type="string", length=255)
+     *@ORM\ManyToOne(targetEntity="CourtCase", inversedBy="documents")
+     *@ORM\JoinColumn(name="court_case", referencedColumnName="id")
      */
-    private $courtCase;
+    private $court_case;
 
     /**
      * @var string
@@ -57,18 +63,11 @@ class Document
     private $mailDate;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="sender", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="document")
+     * @ORM\JoinColumn(name="company", referencedColumnName="id")
      */
-    private $sender;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="recipient", type="string", length=255)
-     */
-    private $recipient;
+    private $company;
 
     /**
      * @var string
@@ -341,5 +340,52 @@ class Document
     {
         return $this->file;
     }
-}
 
+    /**
+     * Set isIncoming
+     *
+     * @param boolean $isIncoming
+     *
+     * @return Document
+     */
+    public function setIsIncoming($isIncoming)
+    {
+        $this->is_incoming = $isIncoming;
+
+        return $this;
+    }
+
+    /**
+     * Get isIncoming
+     *
+     * @return boolean
+     */
+    public function getIsIncoming()
+    {
+        return $this->is_incoming;
+    }
+
+    /**
+     * Set company
+     *
+     * @param \BriefcaseBundle\Entity\Company $company
+     *
+     * @return Document
+     */
+    public function setCompany(\BriefcaseBundle\Entity\Company $company = null)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return \BriefcaseBundle\Entity\Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+}

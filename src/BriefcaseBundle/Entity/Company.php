@@ -71,11 +71,18 @@ class Company
     private $court_case;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="company")
+     */
+    private $document;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->court_case = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->court_case = new ArrayCollection();
+        $this->document = new ArrayCollection();
     }
 
     /**
@@ -264,5 +271,39 @@ class Company
     public function getCourtCase()
     {
         return $this->court_case;
+    }
+
+    /**
+     * Add document
+     *
+     * @param \BriefcaseBundle\Entity\Document $document
+     *
+     * @return Company
+     */
+    public function addDocument(\BriefcaseBundle\Entity\Document $document)
+    {
+        $this->document[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \BriefcaseBundle\Entity\Document $document
+     */
+    public function removeDocument(\BriefcaseBundle\Entity\Document $document)
+    {
+        $this->document->removeElement($document);
+    }
+
+    /**
+     * Get document
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
 }

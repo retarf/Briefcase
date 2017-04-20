@@ -3,6 +3,8 @@
 namespace BriefcaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * CourtCase
@@ -62,6 +64,17 @@ class CourtCase
      * @ORM\JoinColumn(name="company", referencedColumnName="id")
      */
     private $company;
+
+    /**
+     *
+     *@ORM\OneToMany(targetEntity="Document", mappedBy="court_case")
+     */
+    private $documents;
+
+    public function __construct()
+    {
+        $this -> documents = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -215,5 +228,39 @@ class CourtCase
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Add document
+     *
+     * @param \BriefcaseBundle\Entity\Document $document
+     *
+     * @return CourtCase
+     */
+    public function addDocument(\BriefcaseBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \BriefcaseBundle\Entity\Document $document
+     */
+    public function removeDocument(\BriefcaseBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }

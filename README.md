@@ -68,3 +68,8 @@ Enjoy!
 [12]: https://symfony.com/doc/3.2/assetic/asset_management.html
 [13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
 # Briefcase
+
+ToDo after instalation:
+1) app/config/config.yml	-- files_directory set
+2) app/config/parameters.yml	-- database set
+3)
