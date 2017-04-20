@@ -37,7 +37,7 @@ class DocController extends Controller
 		if($form -> isSubmitted() && $form -> isValid())
 		{
 
-			/** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+			////** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
 			$file = $doc -> getFile();
 			$fileName = md5(uniqid()) . '.' . $file -> guessExtension();
 			$file -> move($this -> getParameter('doc_dir'), $fileName);
@@ -63,5 +63,23 @@ class DocController extends Controller
 		$doc = $repository -> findOneById($docId);
 
 		return $this -> render('doc/display.html.twig', array('doc' => $doc, ));
+	}
+
+	/**
+	 *@Route("/delete/{docId}", name="delete")
+	 */
+	public function deleteAction($docId)
+	{
+		$em = $this -> getDoctrine() -> getManager();
+		$doc = $em -> getRepository('BriefcaseBundle:Document') -> findOneById($docId);
+
+		$file = $doc -> getFile();
+		$file = $this -> getParameter('doc_dir'). '/' . $file;
+		unlink($file);
+
+		$em -> remove($doc);
+		$em -> flush();
+
+		return $this -> redirectToRoute('doc_list');
 	}
 }
