@@ -55,11 +55,19 @@ class CaseController extends Controller
 	*/
 	public function displayAction($caseId)
 	{
-		$repository = $this -> getDoctrine() ->getRepository('BriefcaseBundle:CourtCase');
-		$case = $repository -> findOneById($caseId);
+		try 
+		{
+			$repository = $this -> getDoctrine() ->getRepository('BriefcaseBundle:CourtCase');
+			$case = $repository -> findOneById($caseId);
 
-		$docRepo = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Document');
-		$docs = $docRepo -> findByCourtCase($caseId);
+			$docRepo = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Document');
+			$docs = $docRepo -> findByCourtCase($caseId);
+		}
+		catch(Expresion $e)
+		{
+			echo $e -> getMessage();
+		}
+
 
 		return $this -> render('case/display.html.twig', array('case' => $case, 'docs' => $docs, ));
 	}
@@ -72,7 +80,7 @@ class CaseController extends Controller
 		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:CourtCase');
 		$case = $repository -> findOneById($caseId);
 
-				$form = $this -> createForm(CourtCaseType::class, $case);
+		$form = $this -> createForm(CourtCaseType::class, $case);
 
 		$form -> handleRequest($request);
 

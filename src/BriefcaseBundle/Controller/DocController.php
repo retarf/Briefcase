@@ -66,6 +66,45 @@ class DocController extends Controller
 	}
 
 	/**
+	 *@Route("/edit/{docId}", name="doc_edit")
+	 */
+	public function editAction($docId, Request $request)
+	{
+		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Document');
+		$doc = $repository -> findOneById($docId);
+		$oldFile = $doc -> getFile();
+
+		$form = $this -> createForm(DocType::class, $doc);
+		$form -> handleRequest($request);
+
+		if($form -> isSubmitted() && $form -> isValid())
+		{
+
+			if ($form -> get('file') -> getData() !== null)
+			{
+				$fullPath = $this -> getParameter('doc_dir') . "/" . $oldFile;
+				if (file_exists( $fullPath))
+					unlink( $fullPath );
+			}
+
+			$file = $doc -> getFile();
+			$fileName = md5(uniqid()) . '.' . $file -> guessExtension();
+			$file -> move($this -> getParameter('doc_dir'), $fileName);
+
+			$doc -> setFile($fileName);
+
+			$em = $this -> getDoctrine() -> getManager();
+			$em -> persist($doc);
+			$em -> flush();
+
+			return $this -> redirectToRoute('doc_list');
+		}
+
+		return $this->render('doc/form.html.twig', array('form' => $form -> createView(), ));
+	}
+
+
+	/**
 	 *@Route("/delete/{docId}", name="delete")
 	 */
 	public function deleteAction($docId)
