@@ -33,19 +33,21 @@ class User implements UserInterface, \Serializable
 	private $plainPassword;
 
 	/**
-	 *ORM\Column(type="string", length=64)
+	 *Assert\NotBlank()
+	 *@ORM\Column(type="string", length=64, name="password")
 	 */
 	private $password;
 
 	private $salt;
 
 	/**
-	 *ORM\Column(type="string", length=10)
+	 *Assert\NotBlank()
+	 *@ORM\Column(type="string", length=10, name="roles")
 	 */
 	private $roles;
 
 	/**
-	 *ORM\Column(type="boolen, name="is_active")
+	 *@ORM\Column(type="boolean", name="is_active")
 	 */
 	private $isActive;
 
@@ -53,6 +55,11 @@ class User implements UserInterface, \Serializable
 	{
 		$this->isActive = true;
 		$this->salt = md5(uniqid(null, true));
+	}
+
+	public function getId()
+	{
+		return $this->id;
 	}
 
 	public function getUsername()
@@ -97,7 +104,7 @@ class User implements UserInterface, \Serializable
 
 	public function getRoles()
 	{
-		return $this->roles;
+		return array($this->roles);
 	}
 
     public function eraseCredentials()
