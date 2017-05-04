@@ -17,6 +17,12 @@
 						{{ form_start(form) }}
 
 					    <div class="form-group">
+							{% for flash_message in app.session.flashBag.get('username') %}
+								<div class="alert alert-dismissible alert-danger">
+									{{ flash_message }}
+								</div>
+							{% endfor %}
+
 					      <label class="col-lg-2 control-label">Nazwa użytkownika:</label>
 					      <div class="col-lg-10">
 					        {{ form_row(form.username ,{'attr': {'class': 'form-control'}}) }}

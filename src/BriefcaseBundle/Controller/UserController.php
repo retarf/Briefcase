@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use BriefcaseBundle\Entity\User;
 use BriefcaseBundle\Form\UserType;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  *@Route("/admin/user")
@@ -36,18 +37,44 @@ class UserController extends Controller
 
 		if( $form -> isSubmitted() && $form -> isValid())
 		{
-			$role = $request->request->get('user');
-			$role = $role['role'];
+			$data = $request->request->get('user');
+			$role = $data['role'];
+			$username = $data['username'];
 			$user -> setRoles($role);
 
 			$password = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPlainPassword());
 			$user -> setPassword($password);
 
-			$em = $this -> getDoctrine() -> getManager();
-			$em -> persist($user);
-			$em -> flush();
-			return $this -> redirectToRoute('user_list');
+			try {
+				$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:User');
+				$try = $repository -> findOneByUsername($username);
+				if ($try == NULL)
+				{
+					$em = $this -> getDoctrine() -> getManager();
+					$em -> persist($user);
+					$em -> flush();
+				}
+				else
+				{					
+					throw new Exception('Username exists');
+				}
+
+				return $this -> redirectToRoute('user_list');
+			}
+			catch(Exception $e)
+			{
+				if ($e -> getMessage() == 'Username exists')
+				{
+					$this -> addFlash('username', $e -> getMessage());
+				}
+				else
+				{
+					echo $e -> getMessage();
+				}
+
+			}
+
 		}
 
 		return $this -> render('user/form.html.twig', array('form' => $form -> createView(),));
