@@ -22,12 +22,25 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),))
-            ->add('roles', CollectionType::class, array(
+            ->add('role', ChoiceType::class, array(
+                'allow_extra_fields' => true,
+                'mapped' => false,
+                'choices' => array(
+                    'Admin' => 'ROLE_ADMIN',
+                    'User' => 'ROLE_USER')))
+            /*->add('roles', ChoiceType::class, array(
+                'data' => array('ROLE_USER'),
+                'choices' => array(
+                    'Admin' => array('ROLE_ADMIN', ),
+                    'User' => array('ROLE_USER', ))))
+
+             ->add('roles', CollectionType::class, array(
                 'entry_type' => ChoiceType::class,
                 'entry_options' =>  array(
                     'choices' => array(
-                        'Admin' => 'ROLE_ADMIN',
-                        'User' => 'ROLE_USER'))))
+                        'Admin' => array('ROLE_ADMIN', ),
+                        'User' => array('ROLE_USER', ))))) */
+
         ;
 	}
 
