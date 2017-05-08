@@ -38,7 +38,7 @@ class SecurityController extends Controller
     	}
     	catch (Exception $e)
     	{
-    		echo $e;
+    		echo $e -> getMessage();
     	}
 
 	    $authenticationUtils = $this->get('security.authentication_utils');

@@ -7,6 +7,8 @@ use BriefcaseBundle\Form\CompanyType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 
 /**
 *@Route("company")
@@ -49,8 +51,12 @@ class CompanyController extends Controller
 	/**
 	*@Route("/{companyId}", name="display")
 	*/
-	public function displayAction($companyId)
+	public function displayAction($companyId, Request $request)
 	{
+		$session = $request -> getSession();
+
+		$session->set('companyId', $companyId);
+
 		try
 		{
 			$companyRepository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Company');

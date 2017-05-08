@@ -12,17 +12,26 @@ class CourtCaseType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-		-> add('name')
-		-> add('number')
-		-> add('description')
-		-> add('isItCourtCase', ChoiceType::class, array(
-			'choices' => array(
-				'Yes' => true,
-				'No' => false, )))
-		-> add('courtCaseNumber')
-		-> add('company', EntityType::class, array(
-			'class' => 'BriefcaseBundle:Company',
-			'choice_label' => 'name', ))
+			-> add('name')
+			-> add('number')
+			-> add('description')
+			-> add('isItCourtCase', ChoiceType::class, array(
+				'choices' => array(
+					'Yes' => true,
+					'No' => false, )))
+			-> add('courtCaseNumber')
+			-> add('company', EntityType::class, array(
+				'class' => 'BriefcaseBundle:Company',
+				'choice_label' => 'name', ))
 		;
+	}
+
+	public function displayCompanyName($form, $companyName)
+	{
+		$form -> add('company', EntityType::class, array(
+			'class' => 'BriefcaseBundle:Company',
+			'choice_label' => 'name',
+			'disabled' => true,
+			'placeholder' => $companyName ));
 	}
 }

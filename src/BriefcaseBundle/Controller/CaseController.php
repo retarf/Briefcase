@@ -9,6 +9,8 @@ use BriefcaseBundle\Entity\Company;
 use Doctrine\Common\Collections;
 use Symfony\Component\HttpFoundation\Request;
 use BriefcaseBundle\Form\CourtCaseType;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
 *@Route("case")
@@ -18,8 +20,11 @@ class CaseController extends Controller
 	/**
 	*@Route("/", name="case_list")
 	*/
-	public function indexAction()
+	public function indexAction(Request $request)
 	{
+		$session = $request -> getSession();
+		$session -> set('companyId', NULL);
+
 		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:CourtCase');
 		$cases = $repository -> findAll();
 
@@ -32,8 +37,22 @@ class CaseController extends Controller
 	*/
 	public function addAction(Request $request)
 	{
+		$session = $request -> getSession();
+		$companyId = $session -> get('companyId');
+
 		$case = new CourtCase();
 		$form = $this -> createForm(CourtCaseType::class, $case);
+
+		if ($companyId !== NULL)
+		{
+			$companyReference = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Company');
+			$company = $companyReference -> findOneById($companyId);
+			$companyName = $company -> getName();
+
+			CourtCaseType::displayCompanyName($form, $companyName);
+
+			$case -> setCompany($company);
+		}
 
 		$form -> handleRequest($request);
 
@@ -53,8 +72,11 @@ class CaseController extends Controller
 	/**
 	*@Route("/{caseId}", name="case_display")
 	*/
-	public function displayAction($caseId)
+	public function displayAction($caseId, Request $request)
 	{
+		$session = $request -> getSession();
+		$session->set('caseId', $caseId);
+
 		try 
 		{
 			$repository = $this -> getDoctrine() ->getRepository('BriefcaseBundle:CourtCase');
