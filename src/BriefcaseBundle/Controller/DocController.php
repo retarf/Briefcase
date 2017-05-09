@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use BriefcaseBundle\Entity\Document;
 use BriefcaseBundle\Form\DocType;
+use BriefcaseBundle\Form\CourtCaseType;
+use BriefcaseBundle\Form\CompanyType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
 *@Route("doc")
@@ -16,8 +19,21 @@ class DocController extends Controller
 	/**
 	*@Route("/", name="doc_list")
 	*/
-	public function indexAction()
+	public function indexAction(Request $request)
 	{
+		$session = $request -> getSession();
+		$caseId = $session -> get('caseId');
+		$companyId = $session -> get('companyId');
+
+		if (!empty($caseId))
+		{
+			$session -> remove('caseId');
+		}
+		if (!empty($companyId))
+		{
+			$session -> remove('companyId');
+		}
+
 		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Document');
 		$docs = $repository -> findAll();
 
@@ -29,11 +45,31 @@ class DocController extends Controller
 	*/
 	public function addAction(Request $request)
 	{
+		$session = $request -> getSession();
+		$companyId = $session -> get('companyId');
+		$caseId = $session -> get('caseId');
+		
 		$doc = new Document();
-
 		$form = $this -> createForm(DocType::class, $doc);
-		$form -> handleRequest($request);
 
+		if ($companyId !== NULL && $caseId !== NULL)
+		{
+			$companyReference = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Company');
+			$company = $companyReference -> findOneById($companyId);
+			$companyName = $company -> getName();
+
+			$caseReference = $this -> getDoctrine() -> getRepository('BriefcaseBundle:CourtCase');
+			$case = $caseReference -> findOneById($caseId);
+			$caseName = $case -> getName();
+
+			CourtCaseType::displayCompanyName($form, $companyName);
+			DocType::displayCaseName($form, $caseName);
+
+			$doc -> setCompany($company);
+			$doc -> setCourtCase($case);
+		}
+
+		$form -> handleRequest($request);
 		if($form -> isSubmitted() && $form -> isValid())
 		{
 
@@ -48,7 +84,14 @@ class DocController extends Controller
 			$em -> persist($doc);
 			$em -> flush();
 
-			return $this -> redirectToRoute('doc_list');
+			if ($caseId !== NULL)
+			{
+				return $this -> redirectToRoute('case_display', array('caseId' => $caseId));
+			}
+			else
+			{
+				return $this -> redirectToRoute('doc_list');
+			}
 		}
 
 		return $this -> render('doc/form.html.twig', array('form' => $form -> createView(), ));

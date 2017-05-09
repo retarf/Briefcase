@@ -23,7 +23,20 @@ class CaseController extends Controller
 	public function indexAction(Request $request)
 	{
 		$session = $request -> getSession();
-		$session -> set('companyId', NULL);
+		$caseId = $session -> get('caseId');
+		$companyId = $session -> get('companyId');
+
+		if (!empty($caseId))
+		{
+			$session -> remove('caseId');
+		}
+		if (!empty($companyId))
+		{
+			$session -> remove('companyId');
+		}
+
+		echo $session -> get('caseId');
+		echo $session -> get('companyId');
 
 		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:CourtCase');
 		$cases = $repository -> findAll();
@@ -39,6 +52,8 @@ class CaseController extends Controller
 	{
 		$session = $request -> getSession();
 		$companyId = $session -> get('companyId');
+		echo $session -> get('caseId');
+		echo $session -> get('companyId');
 
 		$case = new CourtCase();
 		$form = $this -> createForm(CourtCaseType::class, $case);
@@ -62,10 +77,15 @@ class CaseController extends Controller
 			$em -> persist($case);
 			$em -> flush();
 
-			return $this -> redirectToRoute('case_list');
+			if ($companyId !== NULL)
+			{
+				return $this -> redirectToRoute('company_display', array('companyId' => $companyId));
+			}
+			else
+			{
+				return $this -> redirectToRoute('case_list');
+			}
 		}
-
-
 		return $this->render('case/form.html.twig', array('form' => $form -> createView(), ));
 	}
 
@@ -76,6 +96,8 @@ class CaseController extends Controller
 	{
 		$session = $request -> getSession();
 		$session->set('caseId', $caseId);
+
+		echo $caseId;
 
 		try 
 		{

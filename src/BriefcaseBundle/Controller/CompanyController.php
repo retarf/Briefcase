@@ -18,10 +18,23 @@ class CompanyController extends Controller
 	/**
 	*@Route("/", name="company_list")
 	*/
-	public function indexAction()
+	public function indexAction(Request $request)
 	{
 		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Company');
 		$companys = $repository -> findBy(array(), array('name' => 'ASC'));
+
+		$session = $request -> getSession();
+		$caseId = $session -> get('caseId');
+		$companyId = $session -> get('companyId');
+
+		if (!empty($caseId))
+		{
+			$session -> remove('caseId');
+		}
+		if (!empty($companyId))
+		{
+			$session -> remove('companyId');
+		}
 
 		return $this->render('company/index.html.twig', array('companys' => $companys, ));
 	}
@@ -49,7 +62,7 @@ class CompanyController extends Controller
 	}
 
 	/**
-	*@Route("/{companyId}", name="display")
+	*@Route("/{companyId}", name="company_display")
 	*/
 	public function displayAction($companyId, Request $request)
 	{
@@ -76,7 +89,7 @@ class CompanyController extends Controller
 	}
 
 	/**
-	*@Route("/edit/{companyId}", name="edit")
+	*@Route("/edit/{companyId}", name="company_edit")
 	*/
 	public function editAction($companyId, Request $request)
 	{
@@ -100,7 +113,7 @@ class CompanyController extends Controller
 	}
 
 	/**
-	*@Route("/delete/{companyId}", name="delete")
+	*@Route("/delete/{companyId}", name="company_delete")
 	*/
 	public function deleteAction($companyId)
 	{

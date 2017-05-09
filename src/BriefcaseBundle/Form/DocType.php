@@ -48,9 +48,18 @@ class DocType extends AbstractType
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
-{
-    $resolver->setDefaults(array(
-        'data_class' => Document::class,
-    ));
-}
+	{
+	    $resolver->setDefaults(array(
+	        'data_class' => Document::class,
+	    ));
+	}
+
+	public function displayCaseName($form, $courtCaseName)
+	{
+		$form -> add('court_case', EntityType::class, array(
+			'class' => 'BriefcaseBundle:CourtCase',
+			'choice_label' => 'name',
+			'disabled' => true,
+			'placeholder' => $courtCaseName ));
+	}
 }
