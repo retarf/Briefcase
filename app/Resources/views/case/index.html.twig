@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+
 	
 	<div class="container">
 
@@ -21,12 +22,11 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  	{% set i = 0 %}
 			{% for case in cases %}
-			    
+				{% set i = i + 1 %}
 				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ case.id }}').click()"  >
-							<a href="{{ case.id }}" id="edit-{{ case.id }}"><td>7</td>
-
-							
+							<a href="{{ case.id }}" id="edit-{{ case.id }}"><td>{{ i }}</td>
 							<td>{{ case.name }}</td>
 							<td>{{ case.number }}</td>
 							<td>{{ case.company.name }}</td>

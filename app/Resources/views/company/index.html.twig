@@ -23,10 +23,11 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  	{% set i = 0 %}
 			{% for company in companys %}
-			    
+			    {% set i = i + 1 %}
 				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ company.id }}').click()"  >
-							<a href="{{ company.id }}" id="edit-{{ company.id }}"><td>7</td>
+							<a href="{{ company.id }}" id="edit-{{ company.id }}"><td>{{ i }}</td>
 
 							<td>{{ company.name }}</td>
 							<td>{{ company.street }}</td>

@@ -19,10 +19,11 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  	{% set i = 0 %}
 			{% for user in users %}
-			    
+			    {% set i = i + 1 %}
 				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ user.id }}').click()"  >
-							<a href="{{ user.id }}" id="edit-{{ user.id }}"><td>7</td>
+							<a href="{{ user.id }}" id="edit-{{ user.id }}"><td>{{ i }}</td>
 
 							<td>{{ user.username }}</td>
 							<td>{{ user.roles[0] }}</td>

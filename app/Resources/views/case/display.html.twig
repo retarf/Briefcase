@@ -67,10 +67,11 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  	{% set i = 0 %}
 			{% for doc in docs %}
-			    
+			    {% set i = i + 1 %}
 				    <tr class="active clickable-row" style="cursor: pointer" onclick="getElementById('edit-{{ doc.id }}').click()"  >
-							<a href="/doc/{{ doc.id }}" id="edit-{{ doc.id }}"><td>7</td>
+							<a href="/doc/{{ doc.id }}" id="edit-{{ doc.id }}"><td>{{ i }}</td>
 
 							{% if doc.isIncoming %}
 								<td>Przychodzący</td>

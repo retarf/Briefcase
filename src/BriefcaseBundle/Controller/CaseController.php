@@ -35,9 +35,6 @@ class CaseController extends Controller
 			$session -> remove('companyId');
 		}
 
-		echo $session -> get('caseId');
-		echo $session -> get('companyId');
-
 		$repository = $this -> getDoctrine() -> getRepository('BriefcaseBundle:CourtCase');
 		$cases = $repository -> findAll();
 
@@ -52,8 +49,6 @@ class CaseController extends Controller
 	{
 		$session = $request -> getSession();
 		$companyId = $session -> get('companyId');
-		echo $session -> get('caseId');
-		echo $session -> get('companyId');
 
 		$case = new CourtCase();
 		$form = $this -> createForm(CourtCaseType::class, $case);
@@ -96,8 +91,6 @@ class CaseController extends Controller
 	{
 		$session = $request -> getSession();
 		$session->set('caseId', $caseId);
-
-		echo $caseId;
 
 		try 
 		{
