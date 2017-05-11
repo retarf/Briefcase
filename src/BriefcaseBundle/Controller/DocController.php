@@ -48,7 +48,7 @@ class DocController extends Controller
 		$session = $request -> getSession();
 		$companyId = $session -> get('companyId');
 		$caseId = $session -> get('caseId');
-		
+
 		$doc = new Document();
 		$form = $this -> createForm(DocType::class, $doc);
 

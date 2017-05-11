@@ -92,10 +92,15 @@ class CaseController extends Controller
 		$session = $request -> getSession();
 		$session->set('caseId', $caseId);
 
+
 		try 
 		{
 			$repository = $this -> getDoctrine() ->getRepository('BriefcaseBundle:CourtCase');
 			$case = $repository -> findOneById($caseId);
+
+			$company = $case -> getCompany();
+			$companyId = $company -> getId();
+			$session -> set('companyId', $companyId);
 
 			$docRepo = $this -> getDoctrine() -> getRepository('BriefcaseBundle:Document');
 			$docs = $docRepo -> findByCourtCase($caseId);
