@@ -90,6 +90,12 @@ class Document
      */
     private $file;
 
+    public function __construct()
+    {
+        $this -> date = new \DateTime();
+        $this -> mailDate = new \DateTime();
+    }
+
 
     /**
      * Get id

@@ -2,6 +2,9 @@ briefcase:
   resource: '@BriefcaseBundle/Controller/'
   type: annotation
 
+logout:
+  path: /logout
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
